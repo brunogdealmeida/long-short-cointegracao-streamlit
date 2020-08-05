@@ -119,7 +119,7 @@ def main():
         print(result[1])
 
         # Teste do p-valor
-        if p_value<0.05:
+        if result[1] < 0.05:
             st.text('O resíduo é estacionário.')
             st.text('ADF Statistic: %f' % result[0])
             st.text('p-value: %f' % result[1])
