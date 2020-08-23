@@ -1,9 +1,11 @@
 # To add a new cell, type '# %%'
 # To add a new markdown cell, type '# %% [markdown]'
-# %% [markdown]
-# # Long & Short - Verificação de Pares Cointegrados
-# %% [markdown]
-# #### Operações Long & Short são operações onde você entra Long em um ativo e Short (vendido) em outro ativo. Objetivo desse notebook é verificar se dois ativos são cointegrados, com essa resposta poderemos optar por operar ou não um determinado ativo no momento em que for sinalizada uma entrada.
+
+## Long & Short - Verificação de Pares Cointegrados
+
+# #### Operações Long & Short são operações onde você entra Long em um ativo e Short (vendido) em outro ativo. 
+# #### Objetivo desse notebook é verificar se dois ativos são cointegrados, com essa resposta poderemos optar 
+# #### por operar ou não um determinado ativo no momento em que for sinalizada uma entrada.
 # 
 # ### Funcionalidades
 # 
@@ -12,11 +14,9 @@
 # #### Verifica se o par é cointegrado
 # #### Verifica se o resíduo é estacionário
 # #### Plota gráfico do resíduo
-# 
-# %% [markdown]
+
 # ## 1. Importação das Bibliotecas
 
-# %%
 # Referência bibliográfica
 
 #https://minerandodados.com.br/analisando-dados-da-bolsa-de-valores-com-python/
@@ -34,7 +34,6 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split 
 from sklearn.linear_model import LinearRegression
 from sklearn import metrics
-#import pandas_datareader.data as web
 import yfinance as yf
 from statsmodels.tsa.stattools import coint, adfuller
 import statsmodels.api as sm
@@ -43,10 +42,9 @@ import datetime
 
 plt.rcParams['figure.figsize'] = [20,8]
 
-# %% [markdown]
-# ## 2. Pergunta ao usuário se ele deseja importar os dados da Web ou importar um arquivo local com as cotações e carrega os dados da web ou local em um data frame para tratar os dados
+### 2. Pergunta ao usuário se ele deseja importar os dados da Web ou importar um arquivo local com as cotações
+###    e carrega os dados da web ou local em um data frame para tratar os dados
 
-# %%
 def main():
     st.title('Long & Short - Verificação de Pares Cointegrados')
     st.sidebar.title('Parâmetros do Long & Short')
@@ -88,9 +86,8 @@ def main():
 
         df_data.head()
         
-        ### 3. Cria a coluna de SPREAD, sendo ela a diferença entre o ativo 1 e o ativo 2 e plota o gráfico da                      cotação dos dois ativos 
-
-        # Calcula o spread entre os dois ativos 
+        ### 3. Cria a coluna de SPREAD, sendo ela a diferença entre o ativo 1 e o ativo 2 e plota o gráfico da 
+        ###    cotação dos dois ativos Calcula o spread entre os dois ativos 
         st.text('Ativo 1:' + ticker1)
         st.text('Ativo 2:' + ticker2)
         st.text('Amostra do data frame dos ativos baixados')
@@ -107,7 +104,7 @@ def main():
         # Selecionando amostra para o treinamento
         X_train, y_train = df_data[ticker1], df_data[ticker2]
 
-        # Build linear model to find beta that gives I(0) combination of pair
+        # Faz a regressão linear
         X = sm.add_constant(y_train)
         result = sm.OLS(X_train,X).fit()
 
@@ -134,8 +131,8 @@ def main():
             st.text('std_err: %f' % std_err)
             st.text('slope: %f' % slope)
 
-        ### 7. Plota em um gráfico o Resíduo onde wnxergamos de forma gráfica a estacionariedade do resíduo desse par
-        # Calculate cointegrated series 'full_z' for the whole (train + test) dataset
+        ### 7. Plota em um gráfico o Resíduo onde wnxergamos de forma gráfica a estacionariedade do resíduo 
+        ###    desse par
         serie_z = df_data['RESIDUO']
         serie_z_mean = serie_z.mean()
         plt.plot(serie_z)
